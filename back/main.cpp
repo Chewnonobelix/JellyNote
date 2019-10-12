@@ -1,4 +1,7 @@
 #include <fstream>
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
 
 std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len) {
   std::string ret;
@@ -62,4 +65,9 @@ std::string rotateImage(std::string filename)
 	delete data;
 	
 	return base64_encode(binary.c_str(), len);
+}
+
+PYBIND11_MODULE(jellynote, m) {
+	m.doc() = "Jellynote test";
+	m.def("rotateImage", &rotateImage, "Rotate an image to 180°");
 }
